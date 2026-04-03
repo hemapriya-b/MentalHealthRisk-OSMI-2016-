@@ -145,20 +145,6 @@ pip install -r requirements.txt
 python3 -m src.train
 ```
 
-## Run Interactive Prediction
-
-If you want to answer questions manually and get a prediction from the saved model:
-
-```bash
-python3 test.py
-```
-
-The script will ask the required survey-style questions one by one, then print:
-
-- predicted class
-- plain-language interpretation
-- probability of seeking treatment
-
 ## Generated Outputs
 
 After training, the project writes:
@@ -185,10 +171,9 @@ There may still be domain-level discussion about whether some survey questions a
 
 This project provides a strong, honest, and reproducible machine learning workflow for predicting treatment-seeking behavior using the OSMI 2016 mental health survey dataset.
 
-It did not reach the original 90% stretch goal, but it produced a strong final result with:
+It produced a strong final result with:
 
 - solid generalization
 - high ROC-AUC
 - interpretable outputs
 - leak-safe methodology suitable for academic presentation
-# MentalHealthRisk-OSMI-2016-
