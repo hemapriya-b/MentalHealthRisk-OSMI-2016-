@@ -11,7 +11,7 @@ from .pipeline import (
     cross_validate_models,
     fit_and_evaluate,
     load_dataset,
-    tune_top_models,
+    tune_models,
 )
 
 
@@ -29,7 +29,7 @@ def main() -> None:
     X_train, X_test, dropped_columns = apply_train_based_column_filter(X_train, X_test)
 
     best_model_name, cv_scores = cross_validate_models(X_train, y_train)
-    tuned_model_name, tuned_pipeline, tuning_results = tune_top_models(
+    tuned_model_name, tuned_pipelines, tuning_results = tune_models(
         X_train, y_train, cv_scores
     )
     artifacts = fit_and_evaluate(
@@ -38,8 +38,16 @@ def main() -> None:
         y_train,
         y_test,
         tuned_model_name,
-        tuned_pipeline,
+        tuned_pipelines,
+        cv_scores,
         tuning_results,
+    )
+    best_holdout_model = max(
+        artifacts.model_comparison,
+        key=lambda model_name: (
+            artifacts.model_comparison[model_name]["accuracy"],
+            artifacts.model_comparison[model_name]["roc_auc"],
+        ),
     )
 
     summary = {
@@ -47,10 +55,14 @@ def main() -> None:
         "feature_shape_after_cleaning": X.shape,
         "train_shape": artifacts.train_shape,
         "test_shape": artifacts.test_shape,
+        "compared_models": list(cv_scores.keys()),
         "baseline_best_model": best_model_name,
         "best_model": artifacts.best_model_name,
+        "best_model_selection_rule": "highest tuned cross-validation accuracy on training split",
+        "best_holdout_model_by_accuracy": best_holdout_model,
         "cross_validation_accuracy": cv_scores,
         "tuning_results": artifacts.tuning_results,
+        "model_comparison": artifacts.model_comparison,
         "holdout_metrics": artifacts.metrics,
         "selected_feature_count": len(artifacts.selected_features),
         "dropped_columns_from_train_missingness": dropped_columns,

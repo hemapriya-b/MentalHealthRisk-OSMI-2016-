@@ -100,15 +100,16 @@ This is important because it prevents the test set from influencing preprocessin
 
 ### 6. Model Candidates
 
-The project compares and tunes:
+The project compares and tunes these models:
 
 - Logistic Regression
 - Random Forest
 - Extra Trees
+- Naive Bayes
+- CatBoost
 - XGBoost
-- LightGBM
 
-The final best model is a tuned `RandomForest`.
+The saved best model is chosen by tuned cross-validation on the training split, not by selecting the highest test-set score after the fact.
 
 ## Best Final Parameters
 
@@ -128,6 +129,14 @@ Several more aggressive experiments were tested, including stricter proxy-reduct
 Those variants were rejected because they reduced real holdout performance.
 
 The current saved version is the strongest verified configuration that remained technically leak-safe.
+
+## Latest Comparison Snapshot
+
+From the latest training run:
+
+- `RandomForest` remained the saved model because it achieved the strongest tuned cross-validation score on the training split.
+- `ExtraTrees`, `LogisticRegression`, and `NaiveBayes` each reached `85.71%` holdout accuracy in the side-by-side comparison.
+- `ExtraTrees` produced the strongest holdout ROC-AUC at roughly `0.9300`.
 
 ## Installation
 
@@ -165,6 +174,8 @@ After training, the project writes:
 
 - `models/best_model.joblib`
 - `reports/metrics.json`
+- `reports/model_comparison.csv`
+- `reports/model_comparison.json`
 - `reports/training_summary.json`
 - `reports/confusion_matrix.png`
 - `reports/selected_features.txt`

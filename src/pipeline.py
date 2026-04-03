@@ -22,12 +22,10 @@ import pandas as pd
 import seaborn as sns
 from imblearn.combine import SMOTETomek
 from imblearn.pipeline import Pipeline as ImbPipeline
-from sklearn.base import clone
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
     ExtraTreesClassifier,
     RandomForestClassifier,
-    StackingClassifier,
 )
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.impute import SimpleImputer
@@ -42,6 +40,7 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 from sklearn.model_selection import RandomizedSearchCV, StratifiedKFold, cross_val_score
+from sklearn.naive_bayes import GaussianNB
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 
@@ -55,7 +54,6 @@ from .config import (
     REPORTS_DIR,
     TARGET_COLUMN,
     TEXT_HEAVY_COLUMNS,
-    TOP_MODELS_TO_TUNE,
     TUNING_ITERATIONS,
 )
 
@@ -64,6 +62,7 @@ from .config import (
 class TrainingArtifacts:
     best_model_name: str
     metrics: dict[str, Any]
+    model_comparison: dict[str, dict[str, Any]]
     selected_features: list[str]
     train_shape: tuple[int, int]
     test_shape: tuple[int, int]
@@ -203,7 +202,7 @@ def choose_k_features(X: pd.DataFrame) -> int | str:
     return min(80, max(20, X.shape[1] * 2))
 
 
-def build_candidate_models(include_stacking: bool = True) -> dict[str, Any]:
+def build_candidate_models() -> dict[str, Any]:
     models: dict[str, Any] = {
         "logistic_regression": LogisticRegression(max_iter=2000, class_weight="balanced"),
         "random_forest": RandomForestClassifier(
@@ -224,7 +223,23 @@ def build_candidate_models(include_stacking: bool = True) -> dict[str, Any]:
             random_state=RANDOM_STATE,
             n_jobs=-1,
         ),
+        "naive_bayes": GaussianNB(),
     }
+
+    try:
+        from catboost import CatBoostClassifier
+
+        models["catboost"] = CatBoostClassifier(
+            iterations=400,
+            depth=6,
+            learning_rate=0.05,
+            loss_function="Logloss",
+            eval_metric="AUC",
+            random_seed=RANDOM_STATE,
+            verbose=False,
+        )
+    except ImportError:
+        pass
 
     try:
         from xgboost import XGBClassifier
@@ -243,39 +258,6 @@ def build_candidate_models(include_stacking: bool = True) -> dict[str, Any]:
         )
     except ImportError:
         pass
-
-    try:
-        from lightgbm import LGBMClassifier
-
-        models["lightgbm"] = LGBMClassifier(
-            n_estimators=350,
-            learning_rate=0.05,
-            num_leaves=31,
-            subsample=0.90,
-            colsample_bytree=0.85,
-            random_state=RANDOM_STATE,
-            verbose=-1,
-        )
-    except ImportError:
-        pass
-
-    if include_stacking and {"random_forest", "extra_trees"}.issubset(models):
-        estimators = [
-            ("rf", clone(models["random_forest"])),
-            ("et", clone(models["extra_trees"])),
-        ]
-        if "xgboost" in models:
-            estimators.append(("xgb", clone(models["xgboost"])))
-        elif "lightgbm" in models:
-            estimators.append(("lgbm", clone(models["lightgbm"])))
-
-        models["stacking_ensemble"] = StackingClassifier(
-            estimators=estimators,
-            final_estimator=LogisticRegression(max_iter=2000),
-            stack_method="predict_proba",
-            cv=3,
-            n_jobs=1,
-        )
 
     return models
 
@@ -296,7 +278,7 @@ def build_training_pipeline(X: pd.DataFrame, estimator: Any) -> ImbPipeline:
 def cross_validate_models(X: pd.DataFrame, y: pd.Series) -> tuple[str, dict[str, float]]:
     cv = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=RANDOM_STATE)
     scores: dict[str, float] = {}
-    for name, estimator in build_candidate_models(include_stacking=False).items():
+    for name, estimator in build_candidate_models().items():
         pipeline = build_training_pipeline(X, estimator)
         score = cross_val_score(
             pipeline,
@@ -334,6 +316,17 @@ def get_param_distributions(model_name: str) -> dict[str, list[Any]]:
             "model__min_samples_leaf": [1, 2, 4],
             "model__max_features": ["sqrt", "log2", None],
         },
+        "naive_bayes": {
+            "feature_selector__k": [20, 40, 60, 80, "all"],
+            "model__var_smoothing": np.logspace(-11, -7, 9).tolist(),
+        },
+        "catboost": {
+            "feature_selector__k": [40, 60, 80, "all"],
+            "model__iterations": [200, 400, 600],
+            "model__depth": [4, 6, 8],
+            "model__learning_rate": [0.03, 0.05, 0.08],
+            "model__l2_leaf_reg": [1.0, 3.0, 5.0, 7.0],
+        },
         "xgboost": {
             "feature_selector__k": [40, 60, 80, "all"],
             "model__n_estimators": [200, 350, 500],
@@ -343,35 +336,22 @@ def get_param_distributions(model_name: str) -> dict[str, list[Any]]:
             "model__colsample_bytree": [0.7, 0.85, 1.0],
             "model__reg_lambda": [0.5, 1.0, 2.0],
         },
-        "lightgbm": {
-            "feature_selector__k": [40, 60, 80, "all"],
-            "model__n_estimators": [200, 350, 500],
-            "model__learning_rate": [0.03, 0.05, 0.08, 0.10],
-            "model__num_leaves": [15, 31, 63],
-            "model__subsample": [0.8, 0.9, 1.0],
-            "model__colsample_bytree": [0.7, 0.85, 1.0],
-            "model__min_child_samples": [10, 20, 30],
-        },
-        "stacking_ensemble": {
-            "feature_selector__k": [40, 60, 80, "all"],
-            "model__final_estimator__C": [0.1, 1.0, 3.0, 10.0],
-        },
     }
     return distributions.get(model_name, {})
 
 
-def tune_top_models(
+def tune_models(
     X_train: pd.DataFrame,
     y_train: pd.Series,
     cv_scores: dict[str, float],
-) -> tuple[str, ImbPipeline, dict[str, Any]]:
+) -> tuple[str, dict[str, ImbPipeline], dict[str, Any]]:
     cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=RANDOM_STATE)
-    models = build_candidate_models(include_stacking=False)
-    ranked_names = sorted(cv_scores, key=cv_scores.get, reverse=True)[:TOP_MODELS_TO_TUNE]
+    models = build_candidate_models()
+    ranked_names = sorted(cv_scores, key=cv_scores.get, reverse=True)
 
     best_name = ranked_names[0]
-    best_estimator = build_training_pipeline(X_train, models[best_name])
     best_score = cv_scores[best_name]
+    tuned_pipelines: dict[str, ImbPipeline] = {}
     tuning_results: dict[str, Any] = {}
 
     for model_name in ranked_names:
@@ -391,6 +371,7 @@ def tune_top_models(
             )
             search.fit(X_train, y_train)
             score = float(search.best_score_)
+            tuned_pipelines[model_name] = search.best_estimator_
             tuning_results[model_name] = {
                 "best_cv_accuracy": score,
                 "best_params": search.best_params_,
@@ -398,15 +379,29 @@ def tune_top_models(
             if score > best_score:
                 best_score = score
                 best_name = model_name
-                best_estimator = search.best_estimator_
         else:
-            estimator.fit(X_train, y_train)
+            tuned_pipelines[model_name] = estimator
             tuning_results[model_name] = {
                 "best_cv_accuracy": float(cv_scores[model_name]),
                 "best_params": {},
             }
 
-    return best_name, best_estimator, tuning_results
+    return best_name, tuned_pipelines, tuning_results
+
+
+def calculate_metrics(
+    y_true: pd.Series,
+    y_pred: np.ndarray,
+    y_prob: np.ndarray,
+) -> dict[str, Any]:
+    return {
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "precision": float(precision_score(y_true, y_pred)),
+        "recall": float(recall_score(y_true, y_pred)),
+        "f1_score": float(f1_score(y_true, y_pred)),
+        "roc_auc": float(roc_auc_score(y_true, y_prob)),
+        "classification_report": classification_report(y_true, y_pred, output_dict=True),
+    }
 
 
 def fit_and_evaluate(
@@ -415,50 +410,75 @@ def fit_and_evaluate(
     y_train: pd.Series,
     y_test: pd.Series,
     best_model_name: str,
-    pipeline: ImbPipeline,
+    candidate_pipelines: dict[str, ImbPipeline],
+    cv_scores: dict[str, float],
     tuning_results: dict[str, Any],
 ) -> TrainingArtifacts:
-    pipeline.fit(X_train, y_train)
-
-    y_pred = pipeline.predict(X_test)
-    y_prob = pipeline.predict_proba(X_test)[:, 1]
-
-    metrics = {
-        "accuracy": float(accuracy_score(y_test, y_pred)),
-        "precision": float(precision_score(y_test, y_pred)),
-        "recall": float(recall_score(y_test, y_pred)),
-        "f1_score": float(f1_score(y_test, y_pred)),
-        "roc_auc": float(roc_auc_score(y_test, y_prob)),
-        "classification_report": classification_report(y_test, y_pred, output_dict=True),
-    }
-
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    model_comparison: dict[str, dict[str, Any]] = {}
+    best_pipeline: ImbPipeline | None = None
+    best_metrics: dict[str, Any] = {}
+    best_feature_names: list[str] = []
+    best_predictions: np.ndarray | None = None
+
+    for model_name, pipeline in candidate_pipelines.items():
+        pipeline.fit(X_train, y_train)
+        y_pred = pipeline.predict(X_test)
+        y_prob = pipeline.predict_proba(X_test)[:, 1]
+        metrics = calculate_metrics(y_test, y_pred, y_prob)
+        model_comparison[model_name] = {
+            "baseline_cv_accuracy": float(cv_scores[model_name]),
+            "tuned_cv_accuracy": float(tuning_results[model_name]["best_cv_accuracy"]),
+            **metrics,
+        }
+
+        if model_name == best_model_name:
+            best_pipeline = pipeline
+            best_metrics = metrics
+            best_feature_names = extract_selected_feature_names(pipeline)
+            best_predictions = y_pred
+
+    if best_pipeline is None or best_predictions is None:
+        raise ValueError(f"Best model pipeline not found for {best_model_name}")
+
+    comparison_df = (
+        pd.DataFrame.from_dict(model_comparison, orient="index")
+        .reset_index()
+        .rename(columns={"index": "model"})
+        .sort_values(["accuracy", "roc_auc"], ascending=[False, False])
+    )
+    comparison_export_df = comparison_df.drop(columns=["classification_report"])
+    comparison_export_df.to_csv(REPORTS_DIR / "model_comparison.csv", index=False)
+    (REPORTS_DIR / "model_comparison.json").write_text(
+        comparison_df.to_json(orient="records", indent=2),
+        encoding="utf-8",
+    )
 
     model_path = MODELS_DIR / "best_model.joblib"
-    joblib.dump(pipeline, model_path)
+    joblib.dump(best_pipeline, model_path)
 
     scores_path = REPORTS_DIR / "metrics.json"
     with scores_path.open("w", encoding="utf-8") as file_obj:
-        json.dump(metrics, file_obj, indent=2)
+        json.dump(best_metrics, file_obj, indent=2)
 
     try:
-        plot_confusion_matrix(y_test, y_pred, REPORTS_DIR / "confusion_matrix.png")
+        plot_confusion_matrix(y_test, best_predictions, REPORTS_DIR / "confusion_matrix.png")
     except Exception:
         pass
 
-    feature_names = extract_selected_feature_names(pipeline)
     feature_path = REPORTS_DIR / "selected_features.txt"
-    feature_path.write_text("\n".join(feature_names), encoding="utf-8")
+    feature_path.write_text("\n".join(best_feature_names), encoding="utf-8")
     try:
-        export_shap_summary(pipeline, X_train, REPORTS_DIR)
+        export_shap_summary(best_pipeline, X_train, REPORTS_DIR)
     except Exception:
         pass
 
     return TrainingArtifacts(
         best_model_name=best_model_name,
-        metrics=metrics,
-        selected_features=feature_names,
+        metrics=best_metrics,
+        model_comparison=model_comparison,
+        selected_features=best_feature_names,
         train_shape=X_train.shape,
         test_shape=X_test.shape,
         tuning_results=tuning_results,
