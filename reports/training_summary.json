@@ -1,0 +1,104 @@
+{
+  "dataset_shape": [
+    1433,
+    63
+  ],
+  "feature_shape_after_cleaning": [
+    1433,
+    61
+  ],
+  "train_shape": [
+    1146,
+    46
+  ],
+  "test_shape": [
+    287,
+    46
+  ],
+  "baseline_best_model": "random_forest",
+  "best_model": "random_forest",
+  "cross_validation_accuracy": {
+    "logistic_regression": 0.8682373472949391,
+    "random_forest": 0.8717277486910996,
+    "extra_trees": 0.8664921465968587,
+    "xgboost": 0.8586387434554975,
+    "lightgbm": 0.8577661431064572
+  },
+  "tuning_results": {
+    "random_forest": {
+      "best_cv_accuracy": 0.8813263525305409,
+      "best_params": {
+        "model__n_estimators": 700,
+        "model__min_samples_split": 4,
+        "model__min_samples_leaf": 4,
+        "model__max_features": "log2",
+        "model__max_depth": 12,
+        "feature_selector__k": 80
+      }
+    },
+    "logistic_regression": {
+      "best_cv_accuracy": 0.8787085514834206,
+      "best_params": {
+        "model__solver": "lbfgs",
+        "model__C": 0.1,
+        "feature_selector__k": 40
+      }
+    }
+  },
+  "holdout_metrics": {
+    "accuracy": 0.8536585365853658,
+    "precision": 0.8795180722891566,
+    "recall": 0.8690476190476191,
+    "f1_score": 0.874251497005988,
+    "roc_auc": 0.927420968387355,
+    "classification_report": {
+      "0": {
+        "precision": 0.8181818181818182,
+        "recall": 0.8319327731092437,
+        "f1-score": 0.825,
+        "support": 119.0
+      },
+      "1": {
+        "precision": 0.8795180722891566,
+        "recall": 0.8690476190476191,
+        "f1-score": 0.874251497005988,
+        "support": 168.0
+      },
+      "accuracy": 0.8536585365853658,
+      "macro avg": {
+        "precision": 0.8488499452354874,
+        "recall": 0.8504901960784315,
+        "f1-score": 0.849625748502994,
+        "support": 287.0
+      },
+      "weighted avg": {
+        "precision": 0.8540859669275773,
+        "recall": 0.8536585365853658,
+        "f1-score": 0.853830144588871,
+        "support": 287.0
+      }
+    }
+  },
+  "selected_feature_count": 80,
+  "dropped_columns_from_train_missingness": [
+    "Is your primary role within your company related to tech/IT?",
+    "Do you have medical coverage (private insurance or state-provided) which includes treatment of  mental health issues?",
+    "Do you know local or online resources to seek help for a mental health disorder?",
+    "If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?",
+    "If you have revealed a mental health issue to a client or business contact, do you believe this has impacted you negatively?",
+    "If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?",
+    "If you have revealed a mental health issue to a coworker or employee, do you believe this has impacted you negatively?",
+    "Do you believe your productivity is ever affected by a mental health issue?",
+    "If yes, what percentage of your work time (time performing primary or secondary job functions) is affected by a mental health issue?",
+    "Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?",
+    "If yes, what condition(s) have you been diagnosed with?",
+    "If maybe, what condition(s) do you believe you have?",
+    "If so, what condition(s) were you diagnosed with?",
+    "What US state or territory do you live in?",
+    "What US state or territory do you work in?"
+  ],
+  "target_distribution": {
+    "negative_class": 594,
+    "positive_class": 839
+  }
+}

@@ -1,0 +1,81 @@
+feature,mean_abs_shap
+cat__Have you been diagnosed with a mental health condition by a medical professional?_No,0.07697844209982385
+cat__Have you been diagnosed with a mental health condition by a medical professional?_Yes,0.07085551267640043
+"cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Not applicable to me",0.05837691054895416
+cat__Have you had a mental health disorder in the past?_Yes,0.05303257625332484
+"cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Not applicable to me",0.036050367636709615
+cat__Have you had a mental health disorder in the past?_No,0.03480557028493467
+"cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Often",0.03118466215026469
+cat__Do you currently have a mental health disorder?_Yes,0.023168897848495767
+cat__Do you have a family history of mental illness?_No,0.015062379735509139
+cat__Do you currently have a mental health disorder?_No,0.014362916341490612
+"cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Sometimes",0.011980118523985341
+cat__Were you aware of the options for mental health care provided by your previous employers?_N/A (not currently aware),0.011751884280777041
+cat__Do you have a family history of mental illness?_Yes,0.011356655217084864
+"cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Rarely",0.011352608791826169
+cat__Have you had a mental health disorder in the past?_Maybe,0.006449458859853703
+cat__How willing would you be to share with friends and family that you have a mental illness?_Very open,0.006308194976799764
+cat__Were you aware of the options for mental health care provided by your previous employers?_I was aware of some,0.0059847178962790385
+cat__What is your gender?_female,0.005457603289594919
+cat__What country do you live in?_United States of America,0.005410796333414136
+cat__What country do you work in?_United States of America,0.004998014168388961
+cat__Did you feel that your previous employers took mental health as seriously as physical health?_Some did,0.004031420818863684
+cat__How willing would you be to share with friends and family that you have a mental illness?_Not applicable to me (I do not have a mental illness),0.003718274160753941
+cat__What is your gender?_male,0.0034536797666701235
+cat__Have your previous employers provided mental health benefits?_I don't know,0.0033212527274816646
+cat__Do you know the options for mental health care available under your employer-provided coverage?_Yes,0.0029366725154164543
+"cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Sometimes",0.0028544440409164263
+cat__Why or why not?.1_Stigma,0.0028458421892494255
+cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_None of them,0.0028372607037802002
+cat__Do you think that discussing a mental health disorder with your employer would have negative consequences?_No,0.002777926048229964
+cat__Did your previous employers provide resources to learn more about mental health issues and how to seek help?_None did,0.0026128378730533334
+cat__Did your previous employers provide resources to learn more about mental health issues and how to seek help?_Some did,0.002601860321914721
+"cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Never",0.0024923731681172957
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_Yes,0.0022729645138397864
+cat__Would you bring up a mental health issue with a potential employer in an interview?_No,0.0021246219794354274
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_Some of them,0.002024938983976978
+cat__Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?_No,0.001984853274080004
+cat__How willing would you be to share with friends and family that you have a mental illness?_Neutral,0.0018416283850722108
+cat__Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?_Some did,0.0018311475378981366
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_No,0.0018080653546439613
+"cat__Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?_Yes, I experienced",0.0017921077158053833
+cat__Would you bring up a mental health issue with a potential employer in an interview?_Maybe,0.001690742778049385
+"cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_Yes, all of them",0.0016436818420538224
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_I don't know,0.001546240454755127
+"cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_Very easy",0.0014369635859686433
+cat__Do you know the options for mental health care available under your employer-provided coverage?_No,0.001302677627485552
+"cat__Were you aware of the options for mental health care provided by your previous employers?_Yes, I was aware of all of them",0.0012567131870933068
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_None of them,0.0012471584642760427
+cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_Some of them,0.0012133498386229604
+"cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_I don't know",0.0011885039783079087
+cat__Have your previous employers provided mental health benefits?_Some did,0.001078265572720792
+cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_I don't know,0.0010351646994656198
+"cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_Very difficult",0.0010276110711544663
+cat__Do you think that discussing a mental health disorder with your employer would have negative consequences?_Yes,0.0010079090146337744
+cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_Maybe,0.0009540467640300532
+"cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_Yes, it has",0.0008364441849800554
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_I don't know,0.0008276428582915394
+"cat__Have your previous employers provided mental health benefits?_Yes, they all did",0.0007821611867934251
+cat__Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?_I don't know,0.000736848819521846
+"cat__Did you feel that your previous employers took mental health as seriously as physical health?_Yes, they all did",0.0006332333269560986
+cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_Sometimes,0.0006265751245830609
+cat__How willing would you be to share with friends and family that you have a mental illness?_Not open at all,0.0006089433248908063
+"cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_Yes, always",0.0005899967451344026
+cat__What country do you live in?_Canada,0.0005536798197649139
+cat__Did you feel that your previous employers took mental health as seriously as physical health?_I don't know,0.000471079660190163
+cat__What country do you work in?_Canada,0.0004075700447829046
+"cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Often",0.0002877911654081275
+cat__Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?_Yes,0.00024721560340386774
+"cat__Would you have been willing to discuss a mental health issue with your direct supervisor(s)?_Yes, at all of my previous employers",0.00022346172268124449
+cat__Would you have been willing to discuss a mental health issue with your direct supervisor(s)?_I don't know,0.0002151008303127959
+"cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_Yes, all of them",0.00016585821818875183
+"cat__Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?_Yes, they do",0.0001405171083549025
+"cat__Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?_No, they do not",0.00012080161124172962
+cat__Do you think that discussing a physical health issue with your employer would have negative consequences?_Yes,0.00011355829197312465
+"cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_No, it has not",2.784268089746977e-05
+cat__Which of the following best describes your work position?_Back-end Developer|Supervisor/Team Lead,9.329307650491954e-06
+cat__What country do you live in?_Italy,3.3233517645924044e-06
+cat__Which of the following best describes your work position?_Front-end Developer|Back-end Developer|DevOps/SysAdmin,3.3057509701998862e-06
+cat__Which of the following best describes your work position?_Back-end Developer|Front-end Developer|One-person shop,0.0
+cat__What country do you work in?_Belgium,0.0
+cat__What country do you live in?_Belgium,0.0

@@ -1,0 +1,80 @@
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_I don't know
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_No
+cat__Does your employer provide mental health benefits as part of healthcare coverage?_Yes
+cat__Do you know the options for mental health care available under your employer-provided coverage?_No
+cat__Do you know the options for mental health care available under your employer-provided coverage?_Yes
+cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_I don't know
+cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_Very difficult
+cat__If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:_Very easy
+cat__Do you think that discussing a mental health disorder with your employer would have negative consequences?_No
+cat__Do you think that discussing a mental health disorder with your employer would have negative consequences?_Yes
+cat__Do you think that discussing a physical health issue with your employer would have negative consequences?_Yes
+cat__Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?_Yes
+cat__Have your previous employers provided mental health benefits?_I don't know
+cat__Have your previous employers provided mental health benefits?_Some did
+cat__Have your previous employers provided mental health benefits?_Yes, they all did
+cat__Were you aware of the options for mental health care provided by your previous employers?_I was aware of some
+cat__Were you aware of the options for mental health care provided by your previous employers?_N/A (not currently aware)
+cat__Were you aware of the options for mental health care provided by your previous employers?_Yes, I was aware of all of them
+cat__Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?_I don't know
+cat__Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?_Some did
+cat__Did your previous employers provide resources to learn more about mental health issues and how to seek help?_None did
+cat__Did your previous employers provide resources to learn more about mental health issues and how to seek help?_Some did
+cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_I don't know
+cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_Sometimes
+cat__Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?_Yes, always
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_I don't know
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_None of them
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_Some of them
+cat__Do you think that discussing a mental health disorder with previous employers would have negative consequences?_Yes, all of them
+cat__Would you have been willing to discuss a mental health issue with your direct supervisor(s)?_I don't know
+cat__Would you have been willing to discuss a mental health issue with your direct supervisor(s)?_Yes, at all of my previous employers
+cat__Did you feel that your previous employers took mental health as seriously as physical health?_I don't know
+cat__Did you feel that your previous employers took mental health as seriously as physical health?_Some did
+cat__Did you feel that your previous employers took mental health as seriously as physical health?_Yes, they all did
+cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_None of them
+cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_Some of them
+cat__Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?_Yes, all of them
+cat__Would you bring up a mental health issue with a potential employer in an interview?_Maybe
+cat__Would you bring up a mental health issue with a potential employer in an interview?_No
+cat__Why or why not?.1_Stigma
+cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_Maybe
+cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_No, it has not
+cat__Do you feel that being identified as a person with a mental health issue would hurt your career?_Yes, it has
+cat__Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?_No, they do not
+cat__Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?_Yes, they do
+cat__How willing would you be to share with friends and family that you have a mental illness?_Neutral
+cat__How willing would you be to share with friends and family that you have a mental illness?_Not applicable to me (I do not have a mental illness)
+cat__How willing would you be to share with friends and family that you have a mental illness?_Not open at all
+cat__How willing would you be to share with friends and family that you have a mental illness?_Very open
+cat__Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?_No
+cat__Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?_Yes, I experienced
+cat__Do you have a family history of mental illness?_No
+cat__Do you have a family history of mental illness?_Yes
+cat__Have you had a mental health disorder in the past?_Maybe
+cat__Have you had a mental health disorder in the past?_No
+cat__Have you had a mental health disorder in the past?_Yes
+cat__Do you currently have a mental health disorder?_No
+cat__Do you currently have a mental health disorder?_Yes
+cat__Have you been diagnosed with a mental health condition by a medical professional?_No
+cat__Have you been diagnosed with a mental health condition by a medical professional?_Yes
+cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Never
+cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Not applicable to me
+cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Often
+cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Rarely
+cat__If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?_Sometimes
+cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Not applicable to me
+cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Often
+cat__If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?_Sometimes
+cat__What is your gender?_female
+cat__What is your gender?_male
+cat__What country do you live in?_Belgium
+cat__What country do you live in?_Canada
+cat__What country do you live in?_Italy
+cat__What country do you live in?_United States of America
+cat__What country do you work in?_Belgium
+cat__What country do you work in?_Canada
+cat__What country do you work in?_United States of America
+cat__Which of the following best describes your work position?_Back-end Developer|Front-end Developer|One-person shop
+cat__Which of the following best describes your work position?_Back-end Developer|Supervisor/Team Lead
+cat__Which of the following best describes your work position?_Front-end Developer|Back-end Developer|DevOps/SysAdmin
